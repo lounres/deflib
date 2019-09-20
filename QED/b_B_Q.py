@@ -38,17 +38,18 @@ def B_table(M_up, M_bypass=set(), mass=Decimal(1)):
         for j in range(u + 1):
             M_check[i, j] = (i, j) in M_bypass
 
-    Table[0][0] = (0, 1)
+    Table[0, 0] = (0, 1)
 
     U = -1
 
     for point in M_up:
         for i in range(point[0] + 1):
             for j in range(U + 1, point[1] + 1):
-                Table[i, j] = (0, 0)
-                if i != 0 and not M_check[i - 1][j]:
+                if i or j:
+                    Table[i, j] = (0, 0)
+                if i != 0 and not M_check[i - 1, j]:
                     Table[i, j] = (Table[i, j][0], Table[i, j][1] - mass * Table[i - 1, j][0] + Table[i - 1, j][1])
-                if j != 0 and not M_check[i][j - 1]:
+                if j != 0 and not M_check[i, j - 1]:
                     Table[i, j] = (Table[i, j][0] + Table[i, j - 1][0] + mass * Table[i, j - 1][1], Table[i, j][1])
 
     return Table
@@ -70,8 +71,12 @@ def b_table(M_up, M_bypass=set(), mass=Decimal(1)):
     Table = B_table(M_up, M_bypass=M_bypass, mass=mass)
     for point in Table.indices:
         y = point[0] + point[1]
-        Table[point] = (Table[point][0] / (1 + mass ** 2) ** (y / 2),
-                        Table[point][1] / (1 + mass ** 2) ** (y / 2))
+        if type(mass) == float:
+            Table[point] = (Table[point][0] / (1 + mass ** 2) ** (y / 2),
+                            Table[point][1] / (1 + mass ** 2) ** (y / 2))
+        else:
+            Table[point] = (Table[point][0] / ((1 + mass ** 2) ** y).sqrt(),
+                            Table[point][1] / ((1 + mass ** 2) ** y).sqrt())
 
     return Table
 
@@ -140,7 +145,10 @@ def vec_b(t, u, M_bypass=set(), mass=Decimal(1), sign=None):
     """
 
     B = vec_B(t, u, M_bypass=M_bypass, mass=mass, sign=sign)
-    return B[0] / (1 + mass ** 2) ** ((t + u) / 2), B[1] / (1 + mass ** 2) ** ((t + u) / 2)
+    if type(mass) == float:
+        return B[0] / (1 + mass ** 2) ** ((t + u) / 2), B[1] / (1 + mass ** 2) ** ((t + u) / 2)
+    else:
+        return B[0] / ((1 + mass ** 2) ** (t + u)).sqrt(), B[1] / ((1 + mass ** 2) ** (t + u)).sqrt()
 
 
 def Q(t, u, M_bypass=set(), mass=Decimal(1), sign=None):
@@ -173,5 +181,5 @@ def Q_set(M, M_bypass=set(), mass=Decimal(1)):
 
     Table = B_table(M, M_bypass, mass=mass)
 
-    return sum(list(map(lambda pair: (Table[pair[0], pair[1]][0] ** 2 + Table[pair[0], pair[1]][1] ** 2) /
+    return sum(list(map(lambda pair: (Table[pair][0] ** 2 + Table[pair][1] ** 2) /
                                      (1 + mass ** 2) ** (pair[0] + pair[1]), M)))
