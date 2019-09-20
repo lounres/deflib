@@ -179,7 +179,7 @@ def Q_set(M, M_bypass=set(), mass=Decimal(1)):
     :return: Probability to get to set M.
     """
 
-    Table = B_table(M, M_bypass, mass=mass)
+    Table = B_table(M, M_bypass=M | M_bypass, mass=mass)
 
     return sum(list(map(lambda pair: (Table[pair][0] ** 2 + Table[pair][1] ** 2) /
                                      (1 + mass ** 2) ** (pair[0] + pair[1]), M)))
