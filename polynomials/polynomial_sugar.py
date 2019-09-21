@@ -38,11 +38,11 @@ def interpolation_polynomial(*args, field=None):
             X = list(args[0])
             Y = list(args[1])
         except:
-            raise ValueError('invalid literal for interpolation_Polynomial: ' + ', '.join(args))
+            raise ValueError('invalid literal for interpolation_Polynomial: ' + ', '.join(list(map(str, args))))
         if len(X) != len(Y):
-            raise LogicError('invalid literal for interpolation_Polynomial: ' + ', '.join(args))
+            raise LogicError('invalid literal for interpolation_Polynomial: ' + ', '.join(list(map(str, args))))
         if len(X) == 0:
-            raise ValueError('invalid literal for interpolation_Polynomial: ' + ', '.join(args))
+            raise ValueError('invalid literal for interpolation_Polynomial: ' + ', '.join(list(map(str, args))))
         x = X[0]
     else:
         raise ValueError('interpolation_Polynomial() takes at most 2 arguments (' + str(len(args)) + ' given)')
