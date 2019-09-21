@@ -81,7 +81,10 @@ class DynamicMultiDimCoordList:
 
     @property
     def indices(self):
-        return sum(list(starmap(lambda L, i: [(i,) + index for index in L], zip(list(self._list), self._list.indices))))
+        if self.dim == 1:
+            return list(map(lambda i: (i,), self._list.indices))
+        else:
+            return sum(list(starmap(lambda L, i: [(i,) + index for index in L.indices], zip(list(self._list), self._list.indices))), [])
 
     def _optimise(self):
         if self.dim != 1:
