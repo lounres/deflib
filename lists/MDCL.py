@@ -22,15 +22,15 @@ def _MDCL_item_check(item, dim):
     else:
         dirs = [(*item,)]
     for i in range(len(dirs)):
-        if not all([type(dirs[i][j]) == int for j in range(len(dirs[i]))]):
+        if not all([type(dirs[i][j]) in [type(None), int] for j in range(len(dirs[i]))]):
             if len(dirs[i]) != 1:
                 raise ValueError('slice indices must be integers or None or tuples of integers')
-            elif type(dirs[i][0]) not in [type(None), tuple]:
+            elif type(dirs[i][0]) not in tuple:
                 raise ValueError('slice indices must be integers or None or tuples of integers')
             else:
                 dirs[i] = dirs[i][0]
-                if type(dirs[i]) == tuple and not (all([type(dirs[i][j]) == int for j in range(len(dirs[i]))]) and
-                                                   len(dirs[i]) != dim):
+                if type(dirs[i]) == tuple and not (all([type(dirs[i][j]) == [type(None), int] for j in
+                                                        range(len(dirs[i]))]) and len(dirs[i]) != dim):
                     if dim != 1:
                         raise ValueError('every index must be exactly ' + str(dim) + ' integers or tuple with them')
                     else:
@@ -56,8 +56,6 @@ class DynamicMultiDimCoordList:
 
     @property
     def right_len(self):
-        if not self:
-            raise ValueError('empty DynamicList has no right and left lengths')
         if self.dim == 1:
             return self._list.right_len,
         else:
@@ -66,19 +64,17 @@ class DynamicMultiDimCoordList:
 
     @property
     def left_len(self):
-        if not self:
-            raise ValueError('empty DynamicList has no right and left lengths')
         if self.dim == 1:
             return self._list.left_len,
         else:
             L = [self._list[i].left_len for i in range(-self._list.left_len, self._list.right_len)]
-            return (self._list.left_len, *[min([L[i][k] for i in range(len(L))]) for k in range(self.dim - 1)])
+            return (self._list.left_len, *[max([L[i][k] for i in range(len(L))]) for k in range(self.dim - 1)])
 
     @property
     def sizes(self):
         if not self:
             return (0,) * self.dim
-        return (self.left_len[i] + self.right_len[i] for i in range(self.dim))
+        return tuple(self.left_len[i] + self.right_len[i] for i in range(self.dim))
 
     def __len__(self):
         return reduce(lambda x, y: x * y, self.sizes)
@@ -103,14 +99,11 @@ class DynamicMultiDimCoordList:
 
         if type(item) is slice:
             item = [item.start, item.stop]
-            if item[0] is None:
-                item[0] = tuple(-i for i in self.left_len)
-            else:
-                item[0] = tuple(max(item[0][i], -self.left_len[i]) for i in range(self.dim))
-            if item[1] is None:
-                item[1] = self.right_len
-            else:
-                item[1] = tuple(min(item[1][i], self.right_len[i]) for i in range(self.dim))
+            left_len = self.left_len
+            item[0] = tuple(-left_len[i] if item[0][i] is None else max(item[0][i], -left_len[i])
+                            for i in range(self.dim))
+            item[1] = tuple(self.right_len[i] if item[1][i] is None else min(item[1][i], self.right_len[i])
+                            for i in range(self.dim))
 
             New = DynamicMultiDimCoordList(self.dim)
 
@@ -122,6 +115,8 @@ class DynamicMultiDimCoordList:
                         pass
                 else:
                     try:
+                        if not New._list._index_check(i):
+                            New._list[i] = DynamicMultiDimCoordList(self.dim - 1)
                         New._list[i][item[0][1:]:item[1][1:]] = self._list[i][item[0][1:]:item[1][1:]]
                     except IndexError:
                         pass
@@ -150,26 +145,29 @@ class DynamicMultiDimCoordList:
             if self.dim != value.dim:
                 raise ValueError('DynamicMultiDimCoordList slices must have the same number of dimensions')
 
-            if item[0] is None:
-                item[0] = tuple(max(-self.left_len[i], -value.left_len[i]) for i in range(self.dim))
-            else:
-                item[0] = tuple(max(item[0][i], -self.left_len[i], -value.left_len[i]) for i in range(self.dim))
-            if item[1] is None:
-                item[0] = tuple(min(self.right_len[i], value.right_len[i]) for i in range(self.dim))
-            else:
-                item[0] = tuple(min(item[0][i], self.right_len[i], value.right_len[i]) for i in range(self.dim))
+            item[0] = tuple(-value.left_len[i] if item[0][i] is None else
+                            max(item[0][i], -value.left_len[i])
+                            for i in range(self.dim))
+            item[1] = tuple(value.right_len[i] if item[1][i] is None else
+                            min(item[1][i], value.right_len[i])
+                            for i in range(self.dim))
 
             for i in range(item[0][0], item[1][0]):
                 if self.dim == 1:
                     try:
                         self._list[i] = value._list[i]
                     except IndexError:
-                        del self._list[i]
+                        try:
+                            del self._list[i]
+                        except IndexError:
+                            pass
                 else:
                     try:
+                        if not self._list._index_check(i):
+                            self._list[i] = DynamicMultiDimCoordList(self.dim - 1)
                         self._list[i][item[0][1:]:item[1][1:]] = value._list[i][item[0][1:]:item[1][1:]]
                     except IndexError:
-                        del self._list[i]
+                        del self._list[i][item[0][1:]:item[1][1:]]
 
             self._optimise()
 
@@ -187,14 +185,10 @@ class DynamicMultiDimCoordList:
 
         if type(item) is slice:
             item = [item.start, item.stop]
-            if item[0] is None:
-                item[0] = tuple(-i for i in self.left_len)
-            else:
-                item[0] = tuple(max(item[0][i], -self.left_len[i]) for i in range(self.dim))
-            if item[1] is None:
-                item[1] = self.right_len
-            else:
-                item[1] = tuple(min(item[1][i], self.right_len[i]) for i in range(self.dim))
+            item[0] = tuple(-self.left_len[i] if item[0][i] is None else max(item[0][i], -self.left_len[i])
+                            for i in range(self.dim))
+            item[1] = tuple(self.right_len[i] if item[1][i] is None else min(item[1][i], self.right_len[i])
+                            for i in range(self.dim))
 
             for i in range(item[0][0], item[1][0]):
                 if self.dim == 1:
