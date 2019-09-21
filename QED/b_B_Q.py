@@ -81,7 +81,7 @@ def b_table(M_up, M_bypass=set(), mass=Decimal(1)):
     return Table
 
 
-def Q_table(M_up, M_bypass=set(), mass=Decimal(1)):
+def Q_table(M_up, M_bypass=set(), mass=Decimal(1), sign=None):
     """
     Returning computed table T such that T[i, j] is Q(i, j bypassing M_bypass, mass, sign) for all (i, j) in
     'upper bound' M_up.
@@ -90,6 +90,7 @@ def Q_table(M_up, M_bypass=set(), mass=Decimal(1)):
     or lower than these points.
     :param M_bypass: Set to bypass.
     :param mass: Mass from mass model.
+    :param sign: '+', '-' or None for '+'-probability, '-'-probability or common probability.
 
     :return: Computed Table of vectors Q.
     """
@@ -97,7 +98,12 @@ def Q_table(M_up, M_bypass=set(), mass=Decimal(1)):
     Table = B_table(M_up, M_bypass=M_bypass, mass=mass)
     for point in Table.indices:
         y = point[0] + point[1]
-        Table[point] = (Table[point][0] ** 2 + Table[point][1] ** 2) / (1 + mass ** 2) ** y
+        if sign == '+':
+            Table[point] = Table[point][1] ** 2 / (1 + mass ** 2) ** y
+        elif sign == '-':
+            Table[point] = Table[point][0] ** 2 / (1 + mass ** 2) ** y
+        else:
+            Table[point] = (Table[point][0] ** 2 + Table[point][1] ** 2) / (1 + mass ** 2) ** y
 
     return Table
 

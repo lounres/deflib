@@ -16,7 +16,8 @@ def b_table(M_up: Set[Tuple[int, int]],
 
 def Q_table(M_up: Set[Tuple[int, int]],
             M_bypass: Set[Tuple[int, int]] = ...,
-            mass: Float = ...)\
+            mass: Float = ...,
+            sign: Union[str, None] = ...)\
         -> DMDCL: ...
 
 def vec_B(t: int,

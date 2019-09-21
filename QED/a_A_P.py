@@ -24,7 +24,7 @@ def A_table(M_up, M_bypass=set(), mass=Decimal(1)):
     M_up = {_t_u_corrected(*point) for point in M_up}
     M_bypass = {t_u(*point) for point in filter(lambda point: (point[0] + point[1] + 1) % 2, M_bypass)}
 
-    Table_B = B_table(set(M_up), M_bypass)
+    Table_B = B_table(set(M_up), M_bypass, mass=mass)
     Table_A = DMDCL(2)
 
     for point in Table_B.indices:
@@ -49,7 +49,7 @@ def a_table(M_up, M_bypass=set(), mass=Decimal(1)):
     M_up = {_t_u_corrected(*point) for point in M_up}
     M_bypass = {t_u(*point) for point in filter(lambda point: (point[0] + point[1] + 1) % 2, M_bypass)}
 
-    Table_b = b_table(set(M_up), M_bypass)
+    Table_b = b_table(set(M_up), M_bypass, mass=mass)
     Table_a = DMDCL(2)
 
     for point in Table_b.indices:
@@ -58,7 +58,7 @@ def a_table(M_up, M_bypass=set(), mass=Decimal(1)):
     return Table_a
 
 
-def P_table(M_up, M_bypass=set(), mass=Decimal(1)):
+def P_table(M_up, M_bypass=set(), mass=Decimal(1), sign=None):
     """
     Returning computed table T such that T[i, j] is P(i, j bypassing M_bypass, mass, sign) for all (i, j) in
     'upper bound' M_up.
@@ -67,6 +67,7 @@ def P_table(M_up, M_bypass=set(), mass=Decimal(1)):
     or lower than these points.
     :param M_bypass: Set to bypass.
     :param mass: Mass from mass model.
+    :param sign: '+', '-' or None for '+'-probability, '-'-probability or common probability.
 
     :return: Computed Table of vectors P.
     """
@@ -74,7 +75,7 @@ def P_table(M_up, M_bypass=set(), mass=Decimal(1)):
     M_up = {_t_u_corrected(*point) for point in M_up}
     M_bypass = {t_u(*point) for point in filter(lambda point: (point[0] + point[1] + 1) % 2, M_bypass)}
 
-    Table_Q = Q_table(set(M_up), M_bypass)
+    Table_Q = Q_table(set(M_up), M_bypass=M_bypass, mass=mass, sign=sign)
     Table_P = DMDCL(2)
 
     for point in Table_Q.indices:
