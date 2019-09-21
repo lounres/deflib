@@ -1,6 +1,5 @@
 import copy
-from deflib.common_functions import get_name_of_class
-from deflib.number_theory import primality
+from ..number_theory import primality
 
 
 # Class for the field Z/pZ
@@ -27,7 +26,7 @@ class ZpZ:
     def __add__(self, other):
         copied_self = copy.copy(self)
         if type(other) != ZpZ:
-            raise TypeError("unsupported operand type(s) for +: 'ZpZ' and '" + get_name_of_class(type(other)) + "'")
+            raise TypeError("unsupported operand type(s) for +: 'ZpZ' and '" + type(other).__name__ + "'")
         elif self.module != other.module:
             raise TypeError('unsupported module of Z/pZ for +')
         copied_self.number += other.number
@@ -37,7 +36,7 @@ class ZpZ:
     def __sub__(self, other):
         copied_self = copy.copy(self)
         if type(other) != ZpZ:
-            raise TypeError("unsupported operand type(s) for -: 'ZpZ' and '" + get_name_of_class(type(other)) + "'")
+            raise TypeError("unsupported operand type(s) for -: 'ZpZ' and '" + type(other).__name__ + "'")
         elif self.module != other.module:
             raise TypeError('unsupported module of Z/pZ for -')
         copied_self.numerator -= other.number
@@ -47,7 +46,7 @@ class ZpZ:
     def __mul__(self, other):
         copied_self = copy.copy(self)
         if type(other) != ZpZ:
-            raise TypeError("unsupported operand type(s) for *: 'ZpZ' and '" + get_name_of_class(type(other)) + "'")
+            raise TypeError("unsupported operand type(s) for *: 'ZpZ' and '" + type(other).__name__ + "'")
         elif self.module != other.module:
             raise TypeError('unsupported module of Z/pZ for *')
         copied_self.number *= other.number
@@ -57,7 +56,7 @@ class ZpZ:
     def __truediv__(self, other):
         copied_self = copy.copy(self)
         if type(other) != ZpZ:
-            raise TypeError("unsupported operand type(s) for /: 'ZpZ' and '" + get_name_of_class(type(other)) + "'")
+            raise TypeError("unsupported operand type(s) for /: 'ZpZ' and '" + type(other).__name__ + "'")
         elif self.module != other.module:
             raise TypeError('unsupported module of Z/pZ for /')
         if other.number == 0:
@@ -69,7 +68,7 @@ class ZpZ:
 
     def __pow__(self, power, modulo = None):
         if type(power) != int or modulo != None:
-            raise TypeError("unsupported operand type(s) for ** or pow(): 'ZpZ'" + (" and '" + get_name_of_class(type(power)) + "'" if modulo == None else ", '" + get_name_of_class(type(power)) + "', '" + get_name_of_class(type(modulo)) + "'"))
+            raise TypeError("unsupported operand type(s) for ** or pow(): 'ZpZ'" + (" and '" + type(power).__name__ + "'" if modulo == None else ", '" + type(power).__name__ + "', '" + type(modulo).__name__ + "'"))
         if power == 0:
             return ZpZ(1, self.module)
         ans = (self * self) ** (abs(power) // 2)
@@ -79,7 +78,7 @@ class ZpZ:
 
     def __radd__(self, other):
         if type(other) != ZpZ:
-            raise TypeError("unsupported operand type(s) for +: '" + get_name_of_class(type(other)) + "' and 'ZpZ'")
+            raise TypeError("unsupported operand type(s) for +: '" + type(other).__name__ + "' and 'ZpZ'")
         elif self.module != other.module:
             raise TypeError('unsupported module of Z/pZ for +')
         copied_other = copy.copy(other)
@@ -89,7 +88,7 @@ class ZpZ:
 
     def __rsub__(self, other):
         if type(other) != ZpZ:
-            raise TypeError("unsupported operand type(s) for -: '" + get_name_of_class(type(other)) + "' and 'ZpZ'")
+            raise TypeError("unsupported operand type(s) for -: '" + type(other).__name__ + "' and 'ZpZ'")
         elif self.module != other.module:
             raise TypeError('unsupported module of Z/pZ for -')
         copied_other = copy.copy(other)
@@ -99,7 +98,7 @@ class ZpZ:
 
     def __rmul__(self, other):
         if type(other) != ZpZ:
-            raise TypeError("unsupported operand type(s) for *: '" + get_name_of_class(type(other)) + "' and 'ZpZ'")
+            raise TypeError("unsupported operand type(s) for *: '" + type(other).__name__ + "' and 'ZpZ'")
         elif self.module != other.module:
             raise TypeError('unsupported module of Z/pZ for *')
         copied_other = copy.copy(other)
@@ -109,7 +108,7 @@ class ZpZ:
 
     def __rtruediv__(self, other):
         if type(other) != ZpZ:
-            raise TypeError("unsupported operand type(s) for /: '" + get_name_of_class(type(other)) + "' and 'ZpZ'")
+            raise TypeError("unsupported operand type(s) for /: '" + type(other).__name__ + "' and 'ZpZ'")
         elif self.module != other.module:
             raise TypeError('unsupported module of Z/pZ for /')
         if self.number == 0:
@@ -122,7 +121,7 @@ class ZpZ:
 
     def __iadd__(self, other):
         if type(other) != ZpZ:
-            raise TypeError("unsupported operand type(s) for +: 'ZpZ' and '" + get_name_of_class(type(other)) + "'")
+            raise TypeError("unsupported operand type(s) for +: 'ZpZ' and '" + type(other).__name__ + "'")
         elif self.module != other.module:
             raise TypeError('unsupported module of Z/pZ for +')
         self.number += other.number
@@ -131,7 +130,7 @@ class ZpZ:
 
     def __isub__(self, other):
         if type(other) != ZpZ:
-            raise TypeError("unsupported operand type(s) for -: 'ZpZ' and '" + get_name_of_class(type(other)) + "'")
+            raise TypeError("unsupported operand type(s) for -: 'ZpZ' and '" + type(other).__name__ + "'")
         elif self.module != other.module:
             raise TypeError('unsupported module of Z/pZ for -')
         self.number -= other.number
@@ -140,7 +139,7 @@ class ZpZ:
 
     def __imul__(self, other):
         if type(other) != ZpZ:
-            raise TypeError("unsupported operand type(s) for *: 'ZpZ' and '" + get_name_of_class(type(other)) + "'")
+            raise TypeError("unsupported operand type(s) for *: 'ZpZ' and '" + type(other).__name__ + "'")
         elif self.module != other.module:
             raise TypeError('unsupported module of Z/pZ for *')
         self.number *= other.number
@@ -149,7 +148,7 @@ class ZpZ:
 
     def __itruediv__(self, other):
         if type(other) != ZpZ:
-            raise TypeError("unsupported operand type(s) for /: 'ZpZ' and '" + get_name_of_class(type(other)) + "'")
+            raise TypeError("unsupported operand type(s) for /: 'ZpZ' and '" + type(other).__name__ + "'")
         elif self.module != other.module:
             raise TypeError('unsupported module of Z/pZ for /')
         if other.number == 0:

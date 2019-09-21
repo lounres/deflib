@@ -1,7 +1,6 @@
 import copy
-from deflib.common_functions import get_name_of_class
-from deflib.exceptions import LogicError
-from deflib.combinatorial import gcd
+from ..exceptions import LogicError
+from ..combinatorial import gcd
 
 
 # Class of rational numbers
@@ -65,7 +64,7 @@ class Rational:
         elif type(other) == Rational:
             copied_other = copy.copy(other)
         else:
-            raise TypeError("'<' not supported between instances of 'rat' and '" + get_name_of_class(type(other)) + "'")
+            raise TypeError("'<' not supported between instances of 'rat' and '" + type(other).__name__ + "'")
         return self.numerator * copied_other.denominator < self.denominator * copied_other.numerator
 
     def __le__(self, other):
@@ -75,7 +74,7 @@ class Rational:
             copied_other = copy.copy(other)
         else:
             raise TypeError("'<=' not supported between instances of 'rat' and '"
-                            + get_name_of_class(type(other)) + "'")
+                            + type(other).__name__ + "'")
         return self.numerator * copied_other.denominator <= self.denominator * copied_other.numerator
 
     def __eq__(self, other):
@@ -102,7 +101,7 @@ class Rational:
         elif type(other) == Rational:
             copied_other = copy.copy(other)
         else:
-            raise TypeError("'>' not supported between instances of 'rat' and '" + get_name_of_class(type(other)) + "'")
+            raise TypeError("'>' not supported between instances of 'rat' and '" + type(other).__name__ + "'")
         return self.numerator * copied_other.denominator > self.denominator * copied_other.numerator
 
     def __ge__(self, other):
@@ -111,8 +110,7 @@ class Rational:
         elif type(other) == Rational:
             copied_other = copy.copy(other)
         else:
-            raise TypeError("'>=' not supported between instances of 'rat' and '"
-                            + get_name_of_class(type(other)) + "'")
+            raise TypeError("'>=' not supported between instances of 'rat' and '" + type(other).__name__ + "'")
         return self.numerator * copied_other.denominator >= self.denominator * copied_other.numerator
 
     def __bool__(self):
@@ -128,7 +126,7 @@ class Rational:
             try:
                 return type(other).__radd__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for +: 'rat' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for +: 'rat' and '" + type(other).__name__ + "'")
         copied_self.numerator = self.numerator * copied_other.denominator + self.denominator * copied_other.numerator
         copied_self.denominator *= copied_other.denominator
         copied_self.bring()
@@ -144,7 +142,7 @@ class Rational:
             try:
                 return type(other).__rsub__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'rat' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'rat' and '" + type(other).__name__ + "'")
         copied_self.numerator = self.numerator * copied_other.denominator - self.denominator * copied_other.numerator
         copied_self.denominator *= copied_other.denominator
         copied_self.bring()
@@ -160,7 +158,7 @@ class Rational:
             try:
                 return type(other).__rmul__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for *: 'rat' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for *: 'rat' and '" + type(other).__name__ + "'")
         copied_self.numerator *= copied_other.numerator
         copied_self.denominator *= copied_other.denominator
         copied_self.bring()
@@ -176,7 +174,7 @@ class Rational:
             try:
                 return type(other).__rtruediv__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for /: 'rat' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for /: 'rat' and '" + type(other).__name__ + "'")
         if copied_other == 0:
             raise ZeroDivisionError('division by zero')
         copied_self.numerator *= copied_other.denominator
@@ -198,7 +196,7 @@ class Rational:
         elif type(other) == Rational:
             copied_other = copy.copy(other)
         else:
-            raise TypeError("unsupported operand type(s) for +: '" + get_name_of_class(type(other)) + "' and 'rat'")
+            raise TypeError("unsupported operand type(s) for +: '" + type(other).__name__ + "' and 'rat'")
         copied_self.numerator = self.numerator * copied_other.denominator + self.denominator * copied_other.numerator
         copied_self.denominator *= copied_other.denominator
         copied_self.bring()
@@ -211,7 +209,7 @@ class Rational:
         elif type(other) == Rational:
             copied_other = copy.copy(other)
         else:
-            raise TypeError("unsupported operand type(s) for -: '" + get_name_of_class(type(other)) + "' and 'rat'")
+            raise TypeError("unsupported operand type(s) for -: '" + type(other).__name__ + "' and 'rat'")
         copied_self.numerator = self.denominator * copied_other.numerator - self.numerator * copied_other.denominator
         copied_self.denominator *= copied_other.denominator
         copied_self.bring()
@@ -224,7 +222,7 @@ class Rational:
         elif type(other) == Rational:
             copied_other = copy.copy(other)
         else:
-            raise TypeError("unsupported operand type(s) for *: '" + get_name_of_class(type(other)) + "' and 'rat'")
+            raise TypeError("unsupported operand type(s) for *: '" + type(other).__name__ + "' and 'rat'")
         copied_self.numerator *= copied_other.numerator
         copied_self.denominator *= copied_other.denominator
         copied_self.bring()
@@ -237,7 +235,7 @@ class Rational:
         elif type(other) == Rational:
             copied_other = copy.copy(other)
         else:
-            raise TypeError("unsupported operand type(s) for /: '" + get_name_of_class(type(other)) + "' and 'rat'")
+            raise TypeError("unsupported operand type(s) for /: '" + type(other).__name__ + "' and 'rat'")
         copied_other.numerator *= copied_self.denominator
         copied_other.denominator *= copied_self.numerator
         copied_other.bring()
@@ -252,7 +250,7 @@ class Rational:
             try:
                 return type(other).__radd__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for +: 'rat' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for +: 'rat' and '" + type(other).__name__ + "'")
         self.numerator = self.numerator * copied_other.denominator + self.denominator * copied_other.numerator
         self.denominator *= copied_other.denominator
         self.bring()
@@ -267,7 +265,7 @@ class Rational:
             try:
                 return type(other).__rsub__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'rat' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'rat' and '" + type(other).__name__ + "'")
         self.numerator = self.numerator * copied_other.denominator - self.denominator * copied_other.numerator
         self.denominator *= copied_other.denominator
         self.bring()
@@ -282,7 +280,7 @@ class Rational:
             try:
                 return type(other).__rmul__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for *: 'rat' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for *: 'rat' and '" + type(other).__name__ + "'")
         self.numerator *= copied_other.numerator
         self.denominator *= copied_other.denominator
         self.bring()
@@ -297,7 +295,7 @@ class Rational:
             try:
                 return type(other).__rtruediv__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for /: 'rat' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for /: 'rat' and '" + type(other).__name__ + "'")
         if copied_other == 0:
             raise ZeroDivisionError('division by zero')
         self.numerator *= copied_other.denominator

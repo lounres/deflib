@@ -1,5 +1,4 @@
 import copy
-from ..common_functions import get_name_of_class
 
 
 # Class of pseudo-full sets TODO: Дописать класс псевдополных множеств
@@ -17,8 +16,7 @@ class PseudoFullSet:
         elif type(other) == PseudoFullSet:
             copied_self.out_of_set |= other.out_of_set
         else:
-            raise TypeError("unsupported operand type(s) for +: 'PseudoFullSet' and '" + get_name_of_class(type(other))
-                            + "'")
+            raise TypeError("unsupported operand type(s) for +: 'PseudoFullSet' and '" + type(other).__name__ + "'")
         return copied_self
 
     def __or__(self, other):
@@ -28,8 +26,7 @@ class PseudoFullSet:
         elif type(other) == PseudoFullSet:
             copied_self.out_of_set &= other.out_of_set
         else:
-            raise TypeError("unsupported operand type(s) for +: 'PseudoFullSet' and '" + get_name_of_class(type(other))
-                            + "'")
+            raise TypeError("unsupported operand type(s) for +: 'PseudoFullSet' and '" + type(other).__name__ + "'")
         return copied_self
 
     def __sub__(self, other):
@@ -39,8 +36,7 @@ class PseudoFullSet:
         elif type(other) == PseudoFullSet:
             copied_self.out_of_set |= other.out_of_set
         else:
-            raise TypeError("unsupported operand type(s) for +: 'PseudoFullSet' and '" + get_name_of_class(type(other))
-                            + "'")
+            raise TypeError("unsupported operand type(s) for +: 'PseudoFullSet' and '" + type(other).__name__ + "'")
         return copied_self
 
     def __bool__(self):

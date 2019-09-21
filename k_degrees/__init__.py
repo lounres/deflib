@@ -1,3 +1,4 @@
+from math import factorial
 from ..polynomials import Polynomial
 from ..rings_n_fields import Rational
 
@@ -7,7 +8,7 @@ from ..rings_n_fields import Rational
 def f(j, k):
     dp = [Rational(1)]
     for i in range(k - 1, j - 1, -1):
-        dp.append(sum([-dp[k - t] / math.factorial(t - i + 1) for t in range(i + 1, k + 1)]))
+        dp.append(sum([-dp[k - t] / factorial(t - i + 1) for t in range(i + 1, k + 1)]))
     return dp[-1]
 
 # Previous version (without DP)
@@ -19,7 +20,7 @@ def f(j, k):
 
 # First secondary coefficient
 def t(j, k):
-    return (-1) ** (k - j) * f(j, k) * Rational(math.factorial(k + 1), math.factorial(j + 1), to_bring=False)
+    return (-1) ** (k - j) * f(j, k) * Rational(factorial(k + 1), factorial(j + 1), to_bring=False)
 
 
 # Coefficient of j + 1 degree of the formal symbol in formula of sum of k degree of natural numbers

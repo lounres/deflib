@@ -1,6 +1,7 @@
 import copy
 import functools
-from deflib.exceptions import LogicError
+from ..exceptions import LogicError
+from ..sets import all_bijections
 
 
 # Class of graphs TODO: Дописать класс графов

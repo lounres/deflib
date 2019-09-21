@@ -1,5 +1,4 @@
 import copy
-from deflib.common_functions import get_name_of_class
 
 
 # Class of Gauss's integers
@@ -102,7 +101,7 @@ class GaussInt:
             try:
                 return type(other).__radd__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for +: 'GaussInt' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for +: 'GaussInt' and '" + type(other).__name__ + "'")
         copied_self.real += copied_other.real
         copied_self.imaginary += copied_other.imaginary
         return copied_self
@@ -117,7 +116,7 @@ class GaussInt:
             try:
                 return type(other).__rsub__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'GaussInt' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'GaussInt' and '" + type(other).__name__ + "'")
         copied_self.real -= copied_other.real
         copied_self.imaginary -= copied_other.imaginary
         return copied_self
@@ -132,7 +131,7 @@ class GaussInt:
             try:
                 return type(other).__rmul__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for *: 'GaussInt' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for *: 'GaussInt' and '" + type(other).__name__ + "'")
         copied_self.real = self.real * copied_other.real - self.imaginary * copied_other.imaginary
         copied_self.imaginary = self.real * copied_other.imaginary + self.imaginary * copied_other.real
         return copied_self
@@ -146,7 +145,7 @@ class GaussInt:
             try:
                 return type(other).__rfloordiv__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for //: 'GaussInt' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for //: 'GaussInt' and '" + type(other) + "'")
         if copied_other == 0:
             raise ZeroDivisionError('GaussInt division by zero')
         Norm = copied_other.norm()
@@ -161,7 +160,7 @@ class GaussInt:
             try:
                 return type(other).__rmod__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for %: 'GaussInt' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for %: 'GaussInt' and '" + type(other).__name__ + "'")
         if copied_other == 0:
             raise ZeroDivisionError('GaussInt division by zero')
         Norm = copied_other.norm()
@@ -196,7 +195,7 @@ class GaussInt:
         elif type(other) == GaussInt:
             copied_other = copy.copy(other)
         else:
-            raise TypeError("unsupported operand type(s) for +: '" + get_name_of_class(type(other)) + "' and 'GaussInt'")
+            raise TypeError("unsupported operand type(s) for +: '" + type(other).__name__ + "' and 'GaussInt'")
         copied_other.real += self.real
         copied_other.imaginary += self.imaginary
         return copied_other
@@ -207,7 +206,7 @@ class GaussInt:
         elif type(other) == GaussInt:
             copied_other = copy.copy(other)
         else:
-            raise TypeError("unsupported operand type(s) for -: '" + get_name_of_class(type(other)) + "' and 'GaussInt'")
+            raise TypeError("unsupported operand type(s) for -: '" + type(other).__name__ + "' and 'GaussInt'")
         copied_other.real -= self.real
         copied_other.imaginary -= self.imaginary
         return self
@@ -218,7 +217,7 @@ class GaussInt:
         elif type(other) == GaussInt:
             copied_other = copy.copy(other)
         else:
-            raise TypeError("unsupported operand type(s) for *: '" + get_name_of_class(type(other)) + "' and 'GaussInt'")
+            raise TypeError("unsupported operand type(s) for *: '" + type(other).__name__ + "' and 'GaussInt'")
         copied_other.real = self.real * copied_other.real - self.imaginary * copied_other.imaginary
         copied_other.imaginary = self.real * copied_other.imaginary + self.imaginary * copied_other.real
         return copied_other
@@ -229,7 +228,7 @@ class GaussInt:
         elif type(other) == GaussInt:
             copied_other = copy.copy(other)
         else:
-            raise TypeError("unsupported operand type(s) for //: '" + get_name_of_class(type(other)) + "' and 'GaussInt'")
+            raise TypeError("unsupported operand type(s) for //: '" + type(other).__name__ + "' and 'GaussInt'")
         if self == 0:
             raise ZeroDivisionError('GaussInt division by zero')
         Norm = self.norm()
@@ -241,7 +240,7 @@ class GaussInt:
         elif type(other) == GaussInt:
             copied_other = copy.copy(other)
         else:
-            raise TypeError("unsupported operand type(s) for %: '" + get_name_of_class(type(other)) + "' and 'GaussInt'")
+            raise TypeError("unsupported operand type(s) for %: '" + type(other).__name__ + "' and 'GaussInt'")
         if self == 0:
             raise ZeroDivisionError('GaussInt division by zero')
         Norm = self.norm()
@@ -257,7 +256,7 @@ class GaussInt:
             try:
                 return type(other).__radd__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for +: 'GaussInt' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for +: 'GaussInt' and '" + type(other).__name__ + "'")
         self.real += copied_other.real
         self.imaginary += copied_other.imaginary
         return self
@@ -271,7 +270,7 @@ class GaussInt:
             try:
                 return type(other).__rsub__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'GaussInt' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'GaussInt' and '" + type(other).__name__ + "'")
         self.real -= copied_other.real
         self.imaginary -= copied_other.imaginary
         return self
@@ -285,7 +284,7 @@ class GaussInt:
             try:
                 return type(other).__rmul__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for *: 'GaussInt' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for *: 'GaussInt' and '" + type(other).__name__ + "'")
         self.real = self.real * copied_other.real - self.imaginary * copied_other.imaginary
         self.imaginary = self.real * copied_other.imaginary + self.imaginary * copied_other.real
         return self
@@ -299,7 +298,7 @@ class GaussInt:
             try:
                 return type(other).__rfloordiv__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for //: 'GaussInt' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for //: 'GaussInt' and '" + type(other).__name__ + "'")
         if copied_other == 0:
             raise ZeroDivisionError('GaussInt division by zero')
         Norm = copied_other.norm()
@@ -314,7 +313,7 @@ class GaussInt:
             try:
                 return type(other).__rmod__(other, self)
             except:
-                raise TypeError("unsupported operand type(s) for %: 'GaussInt' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for %: 'GaussInt' and '" + type(other).__name__ + "'")
         if copied_other == 0:
             raise ZeroDivisionError('GaussInt division by zero')
         Norm = copied_other.norm()

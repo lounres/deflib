@@ -269,6 +269,12 @@ class DynamicCoordList:
         else:
             raise TypeError('CoordList indices must be integers or slices, not ' + type(item).__name__)
 
+    # def __eq__(self, other):  # TODO: Написать "=", "!="
+    #     pass
+    #
+    # def __ne__(self, other):
+    #     pass
+
     def shift(self, shift):
         if shift >= 0:
             self._right_list = [[None, False] for _ in range(shift - len(self._left_list))] +\

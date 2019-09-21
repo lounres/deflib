@@ -1,6 +1,3 @@
-from .common_functions import get_name_of_class
-
-
 # Checking for primality of the number
 def primality(n):
     n = abs(n)
@@ -17,9 +14,9 @@ def primality(n):
 # Lagrange's sign of a and p
 def lagrange_sign(a, p):
     if type(a) != int:
-        raise TypeError(repr(get_name_of_class(a)) + ' object cannot be interpreted as an integer')
+        raise TypeError(type(a).__name__ + ' object cannot be interpreted as an integer')
     if type(p) != int:
-        raise TypeError(repr(get_name_of_class(p)) + ' object cannot be interpreted as an integer')
+        raise TypeError(type(p).__name__ + ' object cannot be interpreted as an integer')
     if not primality(p):
         raise ValueError(str(p) + ' isn\'t prime')
 

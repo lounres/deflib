@@ -1,6 +1,5 @@
 import copy
 import functools
-from ..common_functions import get_name_of_class
 
 
 # Class of polynomials over any needed field
@@ -112,7 +111,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for +: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for +: 'Polynomial' and '" + type(other).__name__ + "'")
         self_coefs = list(self.coefficients) + [self.field(0)] * (len(copied_other.coefficients) - len(self.coefficients))
         other_coefs = list(copied_other.coefficients) + [self.field(0)] * (len(self.coefficients) - len(copied_other.coefficients))
         copied_other.coefficients = tuple(self_coefs[i] + other_coefs[i] for i in range(len(self_coefs)))
@@ -128,7 +127,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + type(other).__name__ + "'")
         self_coefs = list(self.coefficients) + [self.field(0)] * (len(copied_other.coefficients) - len(self.coefficients))
         other_coefs = list(copied_other.coefficients) + [self.field(0)] * (len(self.coefficients) - len(copied_other.coefficients))
         copied_other.coefficients = tuple(self_coefs[i] - other_coefs[i] for i in range(len(self_coefs)))
@@ -144,7 +143,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + type(other).__name__ + "'")
         if self == Polynomial(field = self.field) or copied_other == Polynomial(field = self.field):
             return Polynomial(field = self.field)
         copied_other.coefficients = tuple(sum([self.coefficients[j] * copied_other.coefficients[i - j] for j in range(max(0, i - len(copied_other.coefficients) +  1), min(i, len(self.coefficients) - 1) + 1)]) for i in range(len(self.coefficients ) + len(copied_other.coefficients)))
@@ -159,7 +158,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + type(other).__name__ + "'")
         if copied_other == self.field(0):
             raise ZeroDivisionError('Polynomial division by zero')
         copied_self = copy.copy(self)
@@ -182,7 +181,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + type(other).__name__ + "'")
         if copied_other == self.field(0):
             raise ZeroDivisionError('Polynomial division by zero')
         copied_self = copy.copy(self)
@@ -222,7 +221,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + type(other).__name__ + "'")
         self_coefs = list(self.coefficients) + [self.field(0)] * (len(copied_other.coefficients) - len(self.coefficients))
         other_coefs = list(copied_other.coefficients) + [self.field(0)] * (len(self.coefficients) - len(copied_other.coefficients))
         copied_other.coefficients = tuple(self_coefs[i] + other_coefs[i] for i in range(len(self_coefs)))
@@ -238,7 +237,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + type(other).__name__ + "'")
         self_coefs = list(self.coefficients) + [self.field(0)] * (len(copied_other.coefficients) - len(self.coefficients))
         other_coefs = list(copied_other.coefficients) + [self.field(0)] * (len(self.coefficients) - len(copied_other.coefficients))
         copied_other.coefficients = tuple(other_coefs[i] - self_coefs[i] for i in range(len(self_coefs)))
@@ -254,7 +253,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + type(other).__name__ + "'")
         if self == Polynomial(field = self.field) or copied_other == Polynomial(field = self.field):
             return Polynomial(field = self.field)
         copied_other.coefficients = tuple(sum([self.coefficients[j] * copied_other.coefficients[i - j] for j in range(max(0, i - len(copied_other.coefficients) +  1), min(i, len(self.coefficients) - 1) + 1)]) for i in range(len(self.coefficients ) + len(copied_other.coefficients)))
@@ -269,7 +268,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + type(other).__name__ + "'")
         if self == self.field(0):
             raise ZeroDivisionError('Polynomial division by zero')
         copied_other.coefficients = list(copied_other.coefficients)
@@ -291,7 +290,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + type(other).__name__ + "'")
         if self == self.field(0):
             raise ZeroDivisionError('Polynomial division by zero')
         copied_other.coefficients = list(copied_other.coefficients)
@@ -313,7 +312,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + type(other).__name__ + "'")
         self_coefs = list(self.coefficients) + [self.field(0)] * (len(copied_other.coefficients) - len(self.coefficients))
         other_coefs = list(copied_other.coefficients) + [self.field(0)] * (len(self.coefficients) - len(copied_other.coefficients))
         copied_other.coefficients = tuple(self_coefs[i] + other_coefs[i] for i in range(len(self_coefs)))
@@ -329,7 +328,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + type(other).__name__ + "'")
         self_coefs = list(self.coefficients) + [self.field(0)] * (len(copied_other.coefficients) - len(self.coefficients))
         other_coefs = list(copied_other.coefficients) + [self.field(0)] * (len(self.coefficients) - len(copied_other.coefficients))
         copied_other.coefficients = tuple(self_coefs[i] - other_coefs[i] for i in range(len(self_coefs)))
@@ -345,7 +344,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + type(other).__name__ + "'")
         if self == Polynomial(field = self.field) or copied_other == Polynomial(field = self.field):
             return Polynomial(field = self.field)
         copied_other.coefficients = tuple(sum([self.coefficients[j] * copied_other.coefficients[i - j] for j in range(max(0, i - len(copied_other.coefficients) +  1), min(i, len(self.coefficients) - 1) + 1)]) for i in range(len(self.coefficients ) + len(copied_other.coefficients)))
@@ -360,7 +359,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + type(other).__name__ + "'")
         if copied_other == self.field(0):
             raise ZeroDivisionError('Polynomial division by zero')
         copied_self = copy.copy(self)
@@ -383,7 +382,7 @@ class Polynomial:
             try:
                 copied_other = Polynomial(self.field(other), field = self.field)
             except:
-                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + get_name_of_class(type(other)) + "'")
+                raise TypeError("unsupported operand type(s) for -: 'Polynomial' and '" + type(other).__name__ + "'")
         if copied_other == self.field(0):
             raise ZeroDivisionError('Polynomial division by zero')
         copied_self = copy.copy(self)

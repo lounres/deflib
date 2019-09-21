@@ -220,6 +220,12 @@ class DynamicMultiDimCoordList:
             except IndexError:
                 raise IndexError('DynamicMultiDimCoordList index out of range')
 
+    # def __eq__(self, other):  # TODO: Написать "=", "!="
+    #     pass
+    #
+    # def __ne__(self, other):
+    #     pass
+
     def shift(self, *shift):
         self._list.shift(shift[0])
         shift = shift[1:]
